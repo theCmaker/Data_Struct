@@ -5,16 +5,14 @@ class nombreA2Chiffres{
   private int unites; 
   
   public nombreA2Chiffres() throws PasUnChiffre{
-    this.setDizaines(0);
-    this.setUnites(0);
+    this(0,0);
   }
   public nombreA2Chiffres(int u, int d) throws PasUnChiffre{
-    this.setDizaines(d);
-    this.setUnites(u);
+    this.dizaines = d;
+    this.unites = u;
   }
   public nombreA2Chiffres(int n) throws PasUnChiffre{
-    this.setDizaines(n/10);
-    this.setUnites(n%10);
+    this(n/10, n%10);
   }
   private void setUnites(int u) throws PasUnChiffre{
     if (u<10){
@@ -66,32 +64,34 @@ class nombreA2Chiffres{
     int i, j;
     for (i=0; i<l; i++){
       if(a.length == L){
-	j = a[L-i-1]+b[l-i-1]+tmp;
-	System.out.println(j);
-	r.arith(j/10,j%10,false);
+	r.arith(a[L-i-1],b[l-i-1],false);
+	r.setUnites(r.getUnites()+tmp);
+	if(r.getUnites()>=10){
+	  r.setDizaines(r.getDizaines()+1);
+	  r.setUnites(r.getUnites()%10);
+	}
 	tmp = r.getDizaines();
 	res[L-i] = r.getUnites();
       }
       else{
-	j = a[l-i-1]+b[L-i-1]+tmp;
-	System.out.println(j);
-	r.arith(j/10,j%10,false);
+	r.arith(b[L-i-1],a[l-i-1],false);
+	r.setUnites(r.getUnites()+tmp);
+	if(r.getUnites()>=10){
+	  r.setDizaines(r.getDizaines()+1);
+	  r.setUnites(r.getUnites()%10);
+	}
 	tmp = r.getDizaines();
 	res[L-i] = r.getUnites();
       }
     }
     for (i=0; i<L-l; i++){
       if(a.length == L){
-	j = a[L-l-1-i]+tmp;
-	System.out.println(j);
-	r.arith(j/10,j%10,false);
+	r.arith(a[L-l-1-i],tmp,false);
 	tmp = r.getDizaines();
 	res[L-l-i] = r.getUnites();
       }
       else{
-	j = b[L-l-1-i]+tmp;
-	System.out.println(j);
-	r.arith(j/10,j%10,false);
+	r.arith(b[L-l-1-i],tmp,false);
 	tmp = r.getDizaines();
 	res[L-l-i] = r.getUnites();
       }
@@ -100,7 +100,7 @@ class nombreA2Chiffres{
     for (i=0; i<L+1; i++){
       System.out.print(res[i]);
     }
-    System.out.println(" ");
+    System.out.println("");
   }
 }
 
@@ -112,8 +112,8 @@ public class ex1{
     int c = 12;
 //     int[] taba = new int[5];
 //     int[] tabb = new int[3];
-    int[] taba = {1,2,3,4,5};
-    int[] tabb = {1,2,6};
+    int[] taba = {9,9,9,4,3};
+    int[] tabb = {9,9,9};
     nombreA2Chiffres.somme(taba,tabb);
     nombreA2Chiffres d = new nombreA2Chiffres();
     nombreA2Chiffres e = new nombreA2Chiffres();
