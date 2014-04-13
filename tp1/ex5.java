@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class ex5{
   public static void q1(String s){
     int e = 0, t = 0, eol = 0;
@@ -38,23 +40,56 @@ class ex5{
     return (c == 'c')?s.length():(c =='l')?eol+1:e+1;
   }
   public static void q4(String s){
-    int index = 0;
+    int length = 0;
     String str = q2(s);//nettoie les espaces multiples
-    int[] carac = new int[str.length()];
-    for (int i = 0; i < carac.size(); ++i){
-      carac[i] = 0;
+    ArrayList<Integer> carac = new ArrayList<Integer>(str.length()+1);//tableau contenant le nombre de mots de longueur l'indice de la case
+    System.out.println("length : "+carac.size());
+    for (int i = 0; i <= str.length(); ++i){ //initialisation du tableau
+      carac.add(0);
     }
-    for (int i = 0; i < str.length(); ++i){
+    for (int i = 0; i < str.length(); ++i){ //parcours de la chaîne et indexage du nombre de lettres
       if (str.charAt(i) == ' '){
-	carac[i-index]++;
-	index = i+1;
+	carac.set(length, carac.get(length)+1);
+	length = 0;
+      }else{
+	length++;
       }
     }
+    if (length != 0){ //dernier mot ? (chaîne non terminée par une espace)
+      carac.set(length, carac.get(length)+1);
+    }
+    //Calculs pour histogramme
+    int last = carac.size()-1; //dernier baton de l'histogramme
+    while (last >= 0 && carac.get(last) == 0){
+      last--;
+    }
+    int max = 0;
+    for (int i = 0; i < carac.size(); ++i){ //valeur maximum pour le diagramme.
+      max = (carac.get(i) > max)? carac.get(i) : max;
+    }
+    char[][] hist = new char[max+2][last+1];
+    for (int i = 0; i <= last; ++i){//abscisses avec valeurs
+      hist[max][i] = '-';
+      hist[max+1][i] = (char) (i+48);
+    }
+    for (int i = 0; i <= last; ++i){
+      for (int j = 0; j < max; ++j){
+	hist[j][i] = (max-carac.get(i) > j)? ' ' : '#';
+      }
+    }
+    for (int i = 0; i <= max+1; ++i){
+      for (int j = 0; j <= last; ++j){
+	System.out.print(hist[i][j]);
+      }
+      System.out.println();
+    }
+    
   }
   
   
   public static void main(String[] args){
     System.out.println(q2("Patate    toto"));
+    q4("Pat ate toto Bonjour Silence t tam tom tyt");
     
   }
 }

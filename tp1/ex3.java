@@ -79,7 +79,7 @@ class Programme{
       s = new Scanner(new BufferedReader(new FileReader(path)));
     }
     catch(IOException e){
-      System.err.println("IO Exception : "+e.getMessage())
+      System.err.println("IO Exception : "+e.getMessage());
     }
     finally{
       if (s != null){
