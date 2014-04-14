@@ -58,7 +58,10 @@ class ex5{
     if (length != 0){ //dernier mot ? (chaîne non terminée par une espace)
       carac.set(length, carac.get(length)+1);
     }
-    //Calculs pour histogramme
+    
+    /*
+     * Propriétés de l'histogramme
+     */
     int last = carac.size()-1; //dernier baton de l'histogramme
     while (last >= 0 && carac.get(last) == 0){
       last--;
@@ -67,16 +70,28 @@ class ex5{
     for (int i = 0; i < carac.size(); ++i){ //valeur maximum pour le diagramme.
       max = (carac.get(i) > max)? carac.get(i) : max;
     }
+    
+    /*
+     * Abscisses
+     */
     char[][] hist = new char[max+2][last+1];
-    for (int i = 0; i <= last; ++i){//abscisses avec valeurs
+    for (int i = 0; i <= last; ++i){
       hist[max][i] = '-';
-      hist[max+1][i] = (char) (i+48);
+      hist[max+1][i] = (char) ((i%10)+48);
     }
+    
+    /*
+     * Recherche des occurences
+     */
     for (int i = 0; i <= last; ++i){
       for (int j = 0; j < max; ++j){
 	hist[j][i] = (max-carac.get(i) > j)? ' ' : '#';
       }
     }
+    
+    /*
+     * Affichage de l'histogramme
+     */
     for (int i = 0; i <= max+1; ++i){
       for (int j = 0; j <= last; ++j){
 	System.out.print(hist[i][j]);
@@ -89,7 +104,7 @@ class ex5{
   
   public static void main(String[] args){
     System.out.println(q2("Patate    toto"));
-    q4("Pat ate toto Bonjour Silence t tam tom tyt");
+    q4("Pat ate toto Bonjour Silencet t tam tom tyt");
     
   }
 }
