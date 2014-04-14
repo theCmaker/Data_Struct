@@ -77,6 +77,47 @@ class Programme{
     Scanner s = null;
     try{
       s = new Scanner(new BufferedReader(new FileReader(path)));
+      String rub = s.nextLine();
+      if ((rub.length()+1)/2 > MAX){
+        throw new IllegalArgumentException("La taille du ruban excède la taille maximale !");
+      }else {
+        s.useDelimiter(";");
+	
+	// On récupère le ruban
+	if ((rub.length()+1)/2 <= this.ruban.length) {
+	  int k = 0;
+	  for (int i = 0; i<rub.length(); i = i+2) {
+	    this.ruban[k] = rub.charAt(i);
+	    k++;
+	  }
+	}
+	
+	// On récupère les instructions
+	int in1 = 0;
+	int in2 = 0;
+	char ic1 = 'a';
+	char ic2 = 'a';
+	char d1 = 'a';
+	String id = null;
+	if (s.hasNextLine()) {
+	  ic1 = s.next().charAt(0);
+	}
+	while (s.hasNextLine()) {
+	  in1 = s.nextInt();
+	  in2 = s.nextInt();
+	  ic2 = s.next().charAt(0);
+	  id = s.next();
+	  d1 = id.charAt(0);
+	  if (d1 == 'l'){
+	    this.instr.add(new Instruction(ic1,in1,in2,ic2,Dir.LEFT));
+	  }else if(d1 =='r') {
+	    this.instr.add(new Instruction(ic1,in1,in2,ic2,Dir.RIGHT));
+	  }
+	  if (id.length() ==3) {
+	    ic1 = id.charAt(2);
+	  }
+	}
+      }
     }
     catch(IOException e){
       System.err.println("IO Exception : "+e.getMessage());
@@ -86,7 +127,6 @@ class Programme{
 	s.close();
       }
     }
-    
   }
   public boolean setInstructions(Vector<Instruction> instr){
     boolean res = false;
@@ -98,6 +138,9 @@ class Programme{
   }
   public void setQ(int q){
     this.q = q;
+  }
+  public void afficherRuban(){
+    System.out.println(this.ruban);
   }
   public void executer() throws ForbiddenMoveLeftException, ForbiddenMoveRightException, RubanPleinException{
     int i = 0; //compteur
@@ -128,5 +171,20 @@ class Programme{
 	}
       }
     }
+  }
+}
+
+class ex3{
+  public static void main(String[] args){
+    Programme p = new Programme(256,args[0]);
+    System.out.println("Ruban avant execution : ");
+    p.afficherRuban();
+    try{
+    p.executer();
+    } catch(Exception e){
+      System.err.println("Une erreur s'est produite");
+    }
+    System.out.println("Ruban aprés execution : ");
+    p.afficherRuban();
   }
 }
