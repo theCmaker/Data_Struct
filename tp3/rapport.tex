@@ -1,0 +1,104 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc} %encodage entrée
+\usepackage{endnotes} %notes de fin
+\usepackage{graphicx} %images
+\usepackage[usenames,dvipsnames]{color} %couleurs
+\usepackage{listings} %mise en forme de code source
+\usepackage{xfrac}
+\renewcommand\theequation{\arabic{equation}}
+\usepackage{tabularx} % modifier la taille des cellules des tableaux
+\usepackage{upquote}
+\usepackage{textcomp}
+\usepackage[frenchb]{babel} %langue
+\usepackage{amsmath} %affichage des matrices
+\usepackage{lipsum} %génération de lipsum
+\usepackage{verbatim} %code source
+\usepackage{moreverb} %amélioration du package verbatim
+\usepackage{titlesec} %formatage des chapitres
+\titleformat{\chapter}[hang]{\bf\huge}{\thechapter}{2pc}{}
+\usepackage[a4paper]{geometry} %mise en page
+\geometry{hscale=0.8,vscale=0.8,centering}
+%\lstinputlisting[language=Python, firstline=37, lastline=45]{source_filename.py}
+\title{}
+\author{}
+\date{}
+\lstset{literate=
+   {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+   {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+   {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ò}{{\`u}}1
+   {À}{{\`A}}1 {È}{{\`E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ò}{{\`U}}1
+   {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+   {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+   {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+   {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+   {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+   {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+   {€}{{\EUR}}1 {£}{{\pounds}}1
+}
+\lstdefinestyle{customc}{
+   belowcaptionskip=1\baselineskip,
+   breaklines=true,
+   frame=L,
+   xleftmargin=\parindent,
+   language=C,
+   showstringspaces=false,
+   basicstyle=\footnotesize\ttfamily,
+   keywordstyle=\bfseries\color{ForestGreen},
+   commentstyle=\itshape\color{Plum},
+   identifierstyle=\color{NavyBlue},
+   stringstyle=\color{Orange},
+   numbers=left,
+   caption=Code : \lstname,
+   captionpos=b,
+}
+\lstset{
+upquote=true,
+columns=flexible,
+basicstyle=\ttfamily,
+}
+\lstdefinestyle{apercu}{
+   	xleftmargin=2cm,
+	xrightmargin=2cm,
+	frame=single,
+	breaklines=true,
+	breakatwhitespace=true,
+	breakindent=5pt,
+	postbreak=\space,
+	captionpos=b,
+   	escapeinside={\%*}{*)},
+   	showstringspaces=false,
+   	caption=Apercu : \lstname,
+}
+
+\begin{document}
+  \maketitle
+  \tableofcontents
+  
+  \chapter{Exercice 1}
+    \section{Tableaux Multiples}
+      \subsection{Principe}
+      \subsection{Insertion}
+      \subsection{Suppression}
+      \subsection{Code source}
+    \section{Tableau unique}
+      \subsection{Principe}
+      \subsection{Insertion}
+      \subsection{Code source}
+      \subsection{Suppression}
+      
+  \chapter{Exercice 2}
+    \section{Allocation-Liberation}
+    \section{Compacte}
+    \section{Densifier}
+    \section{Code source}
+    
+  \chapter{Exercice 3-5}
+    \section{Principe}
+    \section{Allocation}
+    \section{Libération}
+    \section{Code source}
+    
+  \chapter{Exercice 6}
+    \section{Principe}
+    \section{Code source}
+\end{document}
