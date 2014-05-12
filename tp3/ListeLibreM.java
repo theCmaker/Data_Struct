@@ -37,12 +37,12 @@ class ListeLibreM extends ListeTabM{
   }
   
   public void densifierListe(){
-		int premiereLibre = ((Integer) this.libre.tete()).intValue();
-		Object o = null;
-		while(premiereLibre < this.taille){
-			o = this.tDonnees[this.taille-1]; // On prend l'élément le plus à droite
-			this.liberer(this.taille-1); // On libère La cellule
-			this.allouer(o); // On ajoute à première libre
-			premiereLibre = ((Integer) this.libre.tete()).intValue(); // On actualise la nouvelle tête
+    int premiereLibre = ((Integer) this.libre.tete()).intValue();
+    Object o = null;
+    while(premiereLibre < this.taille){
+      o = this.tDonnees[this.taille-1]; // On prend l'élément le plus à droite
+      this.liberer(this.taille-1); // On libère La cellule
+      this.allouer(o); // On ajoute à première libre
+      premiereLibre = ((Integer) this.libre.tete()).intValue(); // On actualise la nouvelle tête
   }
 }

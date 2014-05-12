@@ -37,7 +37,7 @@ class ListeTabM implements Liste {
       tPrecedent[this.taille] = -1;
       if (this.estVide()) {
         tSuivant[this.taille] = -1;
-				this.fin = this.taille;
+        this.fin = this.taille;
       }else {
         tSuivant[this.taille] = this.debut;
         tPrecedent[this.debut] = this.taille;
@@ -88,16 +88,16 @@ class ListeTabM implements Liste {
       tPrecedent[tSuivant[this.debut]] = -1;
       debut = tSuivant[this.debut];
     }else{
-			int tmp = tSuivant[debut];
-			tPrecedent[tSuivant[this.debut]] = -1;
-			tDonnees[debut] = tDonnees[taille-1];
-			tSuivant[debut] = tSuivant[taille-1];
-			tPrecedent[debut] = tPrecedent[taille-1];
-			tSuivant[tPrecedent[taille-1]] = debut;
-			tPrecedent[tSuivant[taille-1]] = debut;
-			debut = tmp;
-		}
-		this.taille = this.taille-1;
+      int tmp = tSuivant[debut];
+      tPrecedent[tSuivant[this.debut]] = -1;
+      tDonnees[debut] = tDonnees[taille-1];
+      tSuivant[debut] = tSuivant[taille-1];
+      tPrecedent[debut] = tPrecedent[taille-1];
+      tSuivant[tPrecedent[taille-1]] = debut;
+      tPrecedent[tSuivant[taille-1]] = debut;
+      debut = tmp;
+    }
+    this.taille = this.taille-1;
   }
 
   public void supprimerFin() {
@@ -105,14 +105,14 @@ class ListeTabM implements Liste {
       tSuivant[tPrecedent[this.fin]] = -1;
       fin = tPrecedent[this.fin];
     }else{
-			int tmp = tPrecedent[fin];
-			tSuivant[tPrecedent[this.fin]] = -1;
-			tDonnees[fin] = tDonnees[taille-1];
-			tSuivant[fin] = tSuivant[taille-1];
-			tPrecedent[fin] = tPrecedent[taille-1];
-			tSuivant[tPrecedent[taille-1]] = fin;
-			tPrecedent[tSuivant[taille-1]] = fin;
-			fin = tmp;
+      int tmp = tPrecedent[fin];
+      tSuivant[tPrecedent[this.fin]] = -1;
+      tDonnees[fin] = tDonnees[taille-1];
+      tSuivant[fin] = tSuivant[taille-1];
+      tPrecedent[fin] = tPrecedent[taille-1];
+      tSuivant[tPrecedent[taille-1]] = fin;
+      tPrecedent[tSuivant[taille-1]] = fin;
+      fin = tmp;
     }
     this.taille = this.taille - 1;
   }
@@ -144,14 +144,14 @@ class ListeTabM implements Liste {
           tSuivant[courant] = tSuivant[this.taille-1];
           tPrecedent[courant] = tPrecedent[this.taille-1];
           tSuivant[tPrecedent[taille-1]] = courant;
-						tPrecedent[tSuivant[taille-1]] = courant;
+            tPrecedent[tSuivant[taille-1]] = courant;
         }
         if (this.taille-1 == this.fin) {
-					this.fin = courant;
-				}else if (this.taille -1 == this.debut) {
-					this.debut = courant;
-				}
-				this.taille = this.taille -1;
+          this.fin = courant;
+        }else if (this.taille -1 == this.debut) {
+          this.debut = courant;
+        }
+        this.taille = this.taille -1;
       }
     }
   }
@@ -220,6 +220,18 @@ class ListeTabM implements Liste {
     }
     s.append("\n");
     return s.toString();
+  }
+
+  public Object[] elements(){
+    Object[] res = new Object[this.taille];
+    int i = 0;
+    int courant = debut;
+    while (courant != -1) {
+      res[i] = tDonnees[courant];
+      courant = tSuivant[courant];
+      i = i+1;
+    }
+    return res;
   }
 
   public static void main (String[] args) {
