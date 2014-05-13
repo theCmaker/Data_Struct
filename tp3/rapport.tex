@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc} %encodage entrée
 \usepackage{endnotes} %notes de fin
 \usepackage{graphicx} %images
-\usepackage[usenames,dvipsnames]{color} %couleurs
+\usepackage[usenames,dvipsnames]{xcolor} %couleurs
 \usepackage{listings} %mise en forme de code source
 \usepackage{xfrac}
 \renewcommand\theequation{\arabic{equation}}
@@ -15,13 +15,14 @@
 \usepackage{verbatim} %code source
 \usepackage{moreverb} %amélioration du package verbatim
 \usepackage{titlesec} %formatage des chapitres
-\titleformat{\chapter}[hang]{\bf\huge}{\thechapter}{2pc}{}
+\titleformat{\chapter}[hang]{\bf\huge}{}{0pc}{}
+% \renewcommand{\chapter}{Exercice \thechapter}
 \usepackage[a4paper]{geometry} %mise en page
 \geometry{hscale=0.8,vscale=0.8,centering}
 %\lstinputlisting[language=Python, firstline=37, lastline=45]{source_filename.py}
-\title{}
-\author{}
-\date{}
+\title{Structures de Données ~ -- ~ Rapport de TP}
+\author{Axel Delsol, Pierre-Loup Pissavy}
+\date{Mai 2014}
 \lstset{literate=
    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
@@ -35,123 +36,118 @@
    {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
    {€}{{\EUR}}1 {£}{{\pounds}}1
 }
-\lstdefinestyle{customc}{
-   belowcaptionskip=1\baselineskip,
-   breaklines=true,
-   frame=L,
-   xleftmargin=\parindent,
-   language=C,
-   showstringspaces=false,
-   basicstyle=\footnotesize\ttfamily,
-   keywordstyle=\bfseries\color{ForestGreen},
-   commentstyle=\itshape\color{Plum},
-   identifierstyle=\color{NavyBlue},
-   stringstyle=\color{Orange},
-   numbers=left,
-   caption=Code : \lstname,
-   captionpos=b,
-}
+\renewcommand{\lstlistingname}{\textsc{Figure}}
 \lstset{
-upquote=true,
-columns=flexible,
-basicstyle=\ttfamily,
+  upquote=true,
+  columns=flexible,
+  basicstyle=\ttfamily,
 }
-\lstdefinestyle{apercu}{
-   	xleftmargin=2cm,
-	xrightmargin=2cm,
-	frame=single,
-	breaklines=true,
-	breakatwhitespace=true,
-	breakindent=5pt,
-	postbreak=\space,
-	captionpos=b,
-   	escapeinside={\%*}{*)},
-   	showstringspaces=false,
-   	caption=Apercu : \lstname,
+\lstdefinestyle{customjava}{
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  backgroundcolor=\color[HTML]{FDF6E3},
+  language=Java,
+  keepspaces=true,
+  showstringspaces=false,
+  escapeinside={\%*}{*)},
+  basicstyle=\ttfamily,
+  keywordstyle=\bfseries\color[HTML]{859900},
+  commentstyle=\itshape\color[HTML]{657B83},
+  identifierstyle=\color[HTML]{268BD2},
+  stringstyle=\color[HTML]{CB4B16},
+  numbers=left,
 }
-
+\lstnewenvironment{Java}[1][]{\lstset{style=customjava, #1}}{}
+\newcommand{\code}{\lstinline[style=customjava]}
 \begin{document}
   \maketitle
   \tableofcontents
   
-  \chapter{Exercice 1}
+  \setlength{\parskip}{12pt}
+  \chapter*{Exercice 1}
+  \addtocounter{chapter}{1}
+  \addcontentsline{toc}{chapter}{Exercice 1}
     \section{Tableaux Multiples}
       \subsection{Principe}
         Pour implémenter une liste avec des tableaux multiples, on va utiliser 3 tableaux et quelques informations supplémentaires: 
         \begin{itemize}
-          \item Un tableau contenant les données à stocker (tDonnees)
-          \item Un tableau contenant les indices suivant d'un élément (tSuivant)
-          \item Un tableau contenant les indices précédent d'un élément (tPrecedent)
-          \item Un entier indiquant la capacité maximale de la liste car on utilise des tableaux statiques pour l'implémentation (MAX)
-          \item Un entier indiquant le nombre d'élément que contient la liste (taille)
-          \item Un indice de début de la liste même si le début de la liste se caractérise par le fait que le précédent du début de la liste est l'indice -1 (debut)
-          \item Un indice de fin de liste même si la fin de la liste se caractérise par le fait que le suivant de fin est l'indice -1 (fin)
+          \item Un tableau contenant les données à stocker (\code{tDonnees})
+          \item Un tableau contenant les indices suivant d'un élément (\code{tSuivant})
+          \item Un tableau contenant les indices précédent d'un élément (\code{tPrecedent})
+          \item Un entier indiquant la capacité maximale de la liste car on utilise des tableaux statiques pour l'implémentation (\code{MAX})
+          \item Un entier indiquant le nombre d'élément que contient la liste (\code{taille})
+          \item Un indice de début de la liste même si le début de la liste se caractérise par le fait que le précédent du début de la liste est l'indice -1 (\code{debut})
+          \item Un indice de fin de liste même si la fin de la liste se caractérise par le fait que le suivant de fin est l'indice -1 (\code{fin})
         \end{itemize}
-        Lorsqu'on se trouve à une case i de tDonnees, l'élément suivant se trouve à l'indice contenu dans le tableau tSuivant de la case i.
-        Par exemple : si l'élément 3 se trouve à une case i de tDonnees. Si on veut connaitre l'indice de l'élément 4, il suffit de récupérer la valeur tSuivant[i]. Ainsi, on accède à l'élément 4 depuis l'élément 3 avec : tDonnes[tSuivant[i]].
+        Lorsqu'on se trouve à une case \code{i} de \code{tDonnees}, l'élément suivant se trouve à l'indice contenu dans le tableau \code{tSuivant} de la case \code{i}.
+        Par exemple : si l'élément 3 se trouve à une case \code{i} de \code{tDonnees}. Si on veut connaitre l'indice de l'élément 4, il suffit de récupérer la valeur \code{tSuivant[i]}. Ainsi, on accède à l'élément 4 depuis l'élément 3 avec : \code{tDonnees[tSuivant[i]]}.
         Le fonctionnement est le même pour précédent.
         
       \subsection{Suppression}
         La suppression se fait de manière à avoir une liste compacte en permanence. Elle se base sur les instructions suivantes si la liste n'est pas vide (on renvoie un message d'erreur sinon) :
         \begin{enumerate}
           \item On se place à la position du tableau de l'élément qu'on veut supprimer (avec un parcours classique de liste)
-          \item On regarde l'élément le plus à droite dans le tableau (il se trouve dont à l'indice taille-1)
+          \item On regarde l'élément le plus à droite dans le tableau (il se trouve dont à l'indice \code{taille}$-1$)
           \item On échange les informations entre l'élément le plus à droite et l'élément qu'on veut supprimer
           \item On remet à jour les indices suivants et précédents de tous les éléments concernés (suivant-précédent de l'élément supprimé et ceux de l'élément le plus à droite dans le tableau)
-          \item Décrémenter taille.
+          \item Décrémenter \code{taille}.
         \end{enumerate}
         Il y a cependant quelques points auxquels il faut penser.
-        Tout d'abord, si on supprime l'élément le plus à droite, faire un échange ne marchera pas, il faut uniquement changer les pointeurs. De plus, si l'élément le plus à droite était le début ou la fin, il faut penser à changer les attributs debut/fin.
+        Tout d'abord, si on supprime l'élément le plus à droite, faire un échange ne marchera pas, il faut uniquement changer les pointeurs. De plus, si l'élément le plus à droite était le début ou la fin, il faut penser à changer les attributs \code{debut}/\code{fin}.
         
-        Ainsi, dès qu'on supprime un élément, on ne crée jamais de trou dans le tableau car on le "rebouche" dès qu'il est créé donc il est toujours compacte.
+        Ainsi, dès qu'on supprime un élément, on ne crée jamais de trou dans le tableau car on le ``rebouche" dès qu'il est créé donc il est toujours compact.
       \subsection{Insertion}
         Du fait que la liste soit compacte grâce à la méthode de suppression, on sait exactement où on doit insérer notre prochain élément. Il suffit donc d'appliquer les instructions suivantes si la liste n'est pas pleine (on envoie un message d'erreur sinon): 
         \begin{enumerate}
           \item Récupérer l'indice de l'élément précédent la position de l'insertion (avec un parcours classique de liste)
-          \item Placer la donnée dans la case taille du tableau de données
-          \item Mettre à jour les tableaux tSuivant/tPrecedent pour les éléments précédent/suivant du nouvel élément inséré
-          \item Incrémenter taille
+          \item Placer la donnée dans la case \code{taille} du tableau de données
+          \item Mettre à jour les tableaux \code{tSuivant}/\code{tPrecedent} pour les éléments précédent/suivant du nouvel élément inséré
+          \item Incrémenter \code{taille}
         \end{enumerate}
-        On remarque que si l'on insère au début ou à la fin, il faut aussi mettre à jour les indices debut/fin de la structure.
+        On remarque que si l'on insère au début ou à la fin, il faut aussi mettre à jour les indices \code{debut}/\code{fin} de la structure.
       \subsection{Code source}
-        \lstinputlisting[language = java]{ListeTabM.java}
+        \lstinputlisting[style=customjava]{ListeTabM.java}
         
     \section{Tableau unique}
       \subsection{Principe}
         Pour implémenter une liste avec un unique tableau , on va utiliser 1 tableau et quelques informations supplémentaires: 
         \begin{itemize}
           \item Un tableau contenant les données à stocker, l'indice suivant et précédent de la liste.
-          \item Un entier indiquant la capacité maximale de la liste car on utilise des tableaux statiques pour l'implémentation (MAX)
-          \item Un entier indiquant le nombre d'élément que contient la liste (taille)
-          \item Un indice de début de la liste même si le début de la liste se caractérise par le fait que le précédent du début de la liste est l'indice -1 (debut)
-          \item Un indice de fin de liste même si la fin de la liste se caractérise par le fait que le suivant de fin est l'indice -1 (fin)
+          \item Un entier indiquant la capacité maximale de la liste car on utilise des tableaux statiques pour l'implémentation (\code{MAX})
+          \item Un entier indiquant le nombre d'élément que contient la liste (\code{taille})
+          \item Un indice de début de la liste même si le début de la liste se caractérise par le fait que le précédent du début de la liste est l'indice -1 (\code{debut})
+          \item Un indice de fin de liste même si la fin de la liste se caractérise par le fait que le suivant de fin est l'indice -1 (\code{fin})
         \end{itemize}
-        Le fonctionnement de la liste est le suivant : si on se trouve à une case i multiple de 3 alors : la case i+1 contient l'indice de l'élément précédent dans le tableau et la case i+2 contient l'indice de l'élément suivant dans le tableau. Ceci crée donc des blocs de 3 cases dans le tableau
-        Pour obtenir cela, le tableau a donc une taille réelle de 3*MAX et toutes les données sont situées sur des cases multiples de 3.
+        Le fonctionnement de la liste est le suivant : si on se trouve à une case \code{i} multiple de 3 alors : la case \code{i+1} contient l'indice de l'élément précédent dans le tableau et la case \code{i+2} contient l'indice de l'élément suivant dans le tableau. Ceci crée donc des blocs de 3 cases dans le tableau
+        Pour obtenir cela, le tableau a donc une taille réelle de \code{3*MAX} et toutes les données sont situées sur des cases multiples de 3.
         La gestion des suivants/précédents/debut/fin est la même que la méthode avec des tableaux multiples, la seule différence est la localisation des suivants/précédents pour un élément donné.
         
-        On peut remarquer que dans ce cas là, on ne stocke qu'une seule données. Cependant, il suffit d'augmenter la longueur d'un bloc et de donner un indice pour les autres données. Ainsi, on peut généraliser cette méthode pour stocker des objets plus complexes.
+        On peut remarquer que dans ce cas là, on ne stocke qu'une seule donnée. Cependant, il suffit d'augmenter la longueur d'un bloc et de donner un indice pour les autres données. Ainsi, on peut généraliser cette méthode pour stocker des objets plus complexes.
         
       \subsection{Suppression}
         La suppression se base sur le même principe que pour les tableaux multiples, le même algorithme est utilisé. Cependant, l'accès aux données se fait par décalage par rapport à une position donnée.
       \subsection{Insertion}
-        L'insertionse base sur le même principe que pour les tableaux multiples, le même algorithme est utilisé. Cependant, l'accès aux données se fait par décalage par rapport à une position donnée.
+        L'insertion se base sur le même principe que pour les tableaux multiples, le même algorithme est utilisé. Cependant, l'accès aux données se fait par décalage par rapport à une position donnée.
       \subsection{Code source}
-        \lstinputlisting[language = java]{ListeTab.java}
+        \lstinputlisting[style=customjava]{ListeTab.java}
         
-  \chapter{Exercice 2}
-    \section{Allocation-Liberation}
+  \chapter*{Exercice 2}
+  \addtocounter{chapter}{1}
+  \setcounter{section}{0}
+  \addcontentsline{toc}{chapter}{Exercice 2}
+    \section{Allocation-Libération}
       Pour les deux implémentations, la méthode appliquée est la même. On utilise une liste indiquant le numéro des cellules libres. L'insertion des éléments dans la liste se fait à la manière d'une pile : on insère toujours au début de la liste (mais pas forcément au début du tableau dans les implémentations précédentes).
       \subsection{Allocation}
-        Lorsqu'on veut allouer de la mémoire pour stocker un object, on va ajouter la données au debut de la liste de données pour garantir une allocation en temps constant (car on a un attribut pointant sur le début de la liste). 
+        Lorsqu'on veut allouer de la mémoire pour stocker un object, on va ajouter la donnée au debut de la liste de données pour garantir une allocation en temps constant (car on a un attribut pointant sur le début de la liste). 
         L'algorihme utilisé est le suivant :
         \begin{enumerate}
           \item On récupère le numéro de la prochaine case libre (on récupère la tête de la liste des cellules libres)
-          \item On ajoute la données au debut de la liste de données (voir insertion de l'implémentation concernée)
+          \item On ajoute la donnée au début de la liste de données (voir insertion de l'implémentation concernée)
           \item On retire la tête de la liste des cellules libres
         \end{enumerate}
       \subsection{Libération}
-        Lorsqu'on veut libérer de la mémoire, on lui donne le numéro de cellule dans le tableau de données (par exemple : supprime moi la 3eme cellule). A noter que pour le cas de l'implémentation avec un tableau unique, la case concernée est le tableau est la 9eme car les cellules font 3 cases dans le tableau.
+        Lorsqu'on veut libérer de la mémoire, on lui donne le numéro de cellule dans le tableau de données (par exemple : supprime moi la 3eme cellule). A noter que pour le cas de l'implémentation avec un tableau unique, la case concernée dans le tableau est la 9eme car les cellules occupent 3 cases dans le tableau.
         L'algorithme utilisé est le suivant :
         \begin{enumerate}
           \item On supprime la cellule dans la liste de données en modifiant uniquement les valeurs suivants/précédents des éléments suivant/précédents de l'élément concerné par la cellule en cours de suppression
@@ -161,13 +157,13 @@ basicstyle=\ttfamily,
       Pour obtenir une liste compacte, on peut :
       \begin{itemize}
         \item On modifie libération qui décale à chaque fois d'une cellule les éléments dans le tableau de données. Ainsi, la liste des libres sera les numéros de cellules situés aprés les cellules occupées. Donc l'allocation ne change pas. On perd cependant la suppression de cellule en temps constant
-        \item On peut utiliser les implémentations de l'exercice précédent car les listes sont toujours compactes et on a pas besoin de gérer une liste de libre.
+        \item On peut utiliser les implémentations de l'exercice précédent car les listes sont toujours compactes et on a pas besoin de gérer une liste de libres.
       \end{itemize}
     \section{Densifier}
-      Pour densifier une liste, on peut utiliser l'algorihme suivant : 
+      Pour densifier une liste, on peut utiliser l'algorithme suivant : 
       \begin{enumerate}
-        \item On déclare un tableau caractéristique de taille la taille du tableau de données (qui varie selon l'implémentation de la liste) remplis de 0
-        \item On parcours la liste libre et pour chaque élément k de cette liste, on met 1 dans la case k du tableau caractéristique.
+        \item On déclare un tableau caractéristique de taille la taille du tableau de données (qui varie selon l'implémentation de la liste) rempli de 0
+        \item On parcourt la liste libre et pour chaque élément \code{k} de cette liste, on met 1 dans la case \code{k} du tableau caractéristique.
         \item Maintenant qu'on sait quelles sont les cases libres, on peut savoir quelles sont les cases occupées : ce sont les indices du tableau caractéristique dont la valeur stockée est 0 (attention pour l'implémentation avec tableau unique, ce sont uniquement ceux qui sont multiples de 3)
         \item {On remarque que lorsque la liste est dense, tous les éléments libres sont situés aprés la taille de la liste et tous les éléments occupés sont situés avant. Donc dans notre tableau caractéristique, on va rechercher :
           \begin{enumerate}
@@ -175,18 +171,67 @@ basicstyle=\ttfamily,
           \item Les cases occupées qui sont situées entre la taille du tableau et la fin.
           \end{enumerate}}
         \item Une fois qu'on a ces indices,on peut associer une case libre avec une case occupée et il suffit de déplacer les données des cases occupées dans celles des cases libres.
-        \item Enfin, on actualise la liste des cases libres : soit on la vide et on insère tous les numéros de cellules aprés taille soit, pour chaque cases libres dans la liste vide, on échange la valeur avec la case occupée associée
+        \item Enfin, on actualise la liste des cases libres : soit on la vide et on insère tous les numéros de cellules aprés \code{taille} soit, pour chaque case libre dans la liste vide, on échange la valeur avec la case occupée associée
       \end{enumerate}
     \section{Code source}
-      \lstinputlisting[language = java]{ListeLibre.java}
-      \lstinputlisting[language = java]{ListeLibreM.java}
-  \chapter{Exercice 3-5}
+      \lstinputlisting[style=customjava]{ListeLibre.java}
+      \lstinputlisting[style=customjava]{ListeLibreM.java}
+  \chapter*{Exercices 3 -- 5}
+  \addtocounter{chapter}{1}
+  \setcounter{section}{0}
+  \addcontentsline{toc}{chapter}{Exercices 3 -- 5}
     \section{Principe}
+      On souhaite allouer de la mémoire sous forme de blocs, et également que les blocs alloués soient positionnés de manière contigüe dans la mémoire. Ces blocs peuvent être de taille différente, et on souhaite pouvoir les libérer.
+      
+      Puisque la mémoire allouée doit être contigüe, on devra retourner à l'utilisateur un identifiant qui permettra plus tard de retrouver l'emplacement réel de la donnée.
+      
+      On va donc utiliser 3 tableaux et une liste :
+      \begin{itemize}
+	\item Un tableau qui contiendra les données (\code{data}),
+	\item Une liste qui permettra de stocker les espaces libres (\code{free}),
+	\item Un tableau caractéristique de la mémoire qui a chaque indice de début de bloc dans la mémoire fait correspondre la longueur de ce bloc (\code{allocated}),
+	\item Un tableau qui servira de table de correspondance entre la valeur retournée à l'utilisateur et l'emplacement dans la mémoire (\code{redirect}), dont les éléments sont initialisés à $-1$,
+	\item Enfin, on aura besoin de stocker la capacité totale de la mémoire (\code{length}) et la taille d'unité d'allocation, c'est-à-dire la taille par défaut d'un bloc mémoire (\code{allocLength}).
+      \end{itemize}
     \section{Allocation}
+      Pour allouer de la mémoire, on exécutera l'algorithme suivant :
+      \begin{enumerate}
+	\item On récupère l'indice de la première case libre (tête de la liste \code{free}). Si la liste est vide, la mémoire est pleine, on lance alors une exception,
+	\item Si une case est libre, on vérifie qu'il reste assez de mémoire pour réserver l'espace demandé, sinon on lance une exception,
+	\item Si l'espace est disponible, on stocke la longueur du bloc dans \code{allocated} à l'indice récupéré précédemment,
+	\item On calcule la position du prochain bloc libre et on la stocke dans la liste \code{free},
+	\item On recherche ensuite dans \code{redirect} la première case libre (valant $-1$) et on récupère son indice (\code{i}),
+	\item On stocke l'indice de l'emplacement mémoire dans \code{redirect[i]} et on retourne \code{i}.
+      \end{enumerate}
+    \newpage
     \section{Libération}
+      Pour libérer de la mémoire, l'opération est plus délicate, car on doit décaler les blocs mémoire qui sont après le bloc libéré, s'il y en a, afin de garantir que les blocs alloués seront contigus en mémoire.
+      
+      On donnera à la fonction l'entier qui a été retourné lors de l'allocation.
+      
+      On pourra utiliser l'algorithme suivant :
+      \begin{enumerate}
+	\item On récupère l'adresse réelle où est stocké l'objet avec le tableau \code{redirect},
+	\item On récupère la longueur du bloc dans \code{allocated},
+	\item On indique dans \code{redirect} que la case est libre (passage à $-1$),
+	\item On calcule la position \code{i} du début du prochain bloc,
+	\item On décale tous les blocs suivants en pensant à actualiser les indices dans \code{redirect} et les longueurs des blocs dans \code{allocated},
+	\item On indique que l'indice du premier bloc libre correspond maintenant à celui indiqué précédemment auquel on a soustrait la longueur réelle du bloc libéré.
+      \end{enumerate}
     \section{Code source}
-    
-  \chapter{Exercice 6}
+      \lstinputlisting[style=customjava, lastline=77]{Memory.java}
+  \chapter*{Exercice 6}
+  \addtocounter{chapter}{3}
+  \setcounter{section}{0}
+  \addcontentsline{toc}{chapter}{Exercice 6}
     \section{Principe}
+      Les tableaux dynamiques gèrent tout seuls leur taille.
+      
+      Afin de garantir qu'on pourra toujours ajouter des éléments, on vérifie lors de l'insertion de données que le nombre d'éléments reste inférieur ou égal au nombre de cases disponibles. Lorsqu'on ne dispose plus de suffisamment d'espace, on doit créer un nouveau tableau plus grand dans lequel on recopie le contenu de l'ancien. On peut alors ajouter l'élément.
+      
+      Dans le cas présent, on choisira de doubler la taille du tableau dès qu'il ne reste plus de place.
+      
+      Les autres opérations sur ce genre de tableau ne changent pas.
     \section{Code source}
+      \lstinputlisting[style=customjava]{TableauDynamique.java}
 \end{document}

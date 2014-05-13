@@ -6,6 +6,7 @@ class Memory {
   private int length;
   private Liste free;
   private int allocLength;
+  
   Memory(int capacity, int allocLength){
     this.redirect = new int[capacity];
     for (int i = 0; i < capacity; ++i) {
@@ -34,7 +35,7 @@ class Memory {
         }else{
           this.redirect[i] = firstFree;
           if (firstFree + n*this.allocLength < this.length){
-            this.free.insererFin(firstFree+(n*this.allocLength));
+            this.free.insererDebut(firstFree+(n*this.allocLength));
           }
           return i;
         }
@@ -52,7 +53,13 @@ class Memory {
     this.redirect[A] = -1;
     int i = index + allocated[index]*this.allocLength;
     int offset = index;
-    int end = (this.free.estVide()) ? this.length-length*this.allocLength : ((Integer) this.free.tete()).intValue()-length*this.allocLength;
+    int end;
+    if (this.free.estVide()){
+      end = this.length-length*this.allocLength;
+    }else{
+      end = ((Integer) this.free.tete()).intValue()-length*this.allocLength;
+      this.free.supprimerDebut();
+    }
     while (i < end) {
       int j = 0;
       while (j < this.length && this.redirect[j] != i){
@@ -60,12 +67,13 @@ class Memory {
       }
       this.allocated[offset]=this.allocated[this.redirect[j]];
       this.redirect[j]=offset;
-      for(int k = i; k<i+this.allocated[i]*this.allocLength;++k){
+      for (int k = i; k<i+this.allocated[i]*this.allocLength; ++k){
         this.data[offset]=this.data[k];
         offset++;
         i++;
       }
     }
+    this.free.insererDebut(new Integer(end));
   }
   public static void main (String[] args) throws MemoryErrorException{
     Memory myMem = new Memory(5,1);

@@ -1,17 +1,10 @@
 class TableauDynamique {
   Object[] tab; // Tableau qui va contenir les données
   int taille; // taille du tableau (nombre d'élément réellement insérés)
-  int pasIncrementation; //Indique le pas d'incrémentation du tableau lorsqu'on tente d'ajouter un élément alors que le tableau est plein. (10 par défaut)
 
   public TableauDynamique(int t) {
     this.tab = new Object[t];
     this.taille = 0;
-    this.pasIncrementation = 10;
-  }
-
-  public TableauDynamique(int t, int pas){
-    this(t);
-    this.pasIncrementation = pas;
   }
 
   public Object get(int i){
@@ -31,7 +24,7 @@ class TableauDynamique {
       taille++;
     }
     else { // Sinon, on doit copier les éléments dans un plus grand tableau avant de pouvoir ajouter
-      Object[] nvTab = new Object[this.size() + this.pasIncrementation];
+      Object[] nvTab = new Object[2*this.size()];
       for (int i = 0; i < this.tab.length; ++i) {
         nvTab[i] = this.get(i);
       }
