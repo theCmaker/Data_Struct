@@ -13,5 +13,5 @@ interface Liste {
   public Object element(int i); // Renvoie l'élément à la position i
   public Object suivant(int i); // Renvoie l'élément i+1
   public Object precedent(int i);
-  public Objet[] elements(); // Renvoie un tableau d'object de la liste
+  public Object[] elements(); // Renvoie un tableau d'object de la liste
 }
