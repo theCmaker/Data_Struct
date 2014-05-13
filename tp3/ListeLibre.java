@@ -36,6 +36,7 @@ class ListeLibre extends ListeTab{
         this.liste[precedent+2] = suivant;
         this.liste[suivant+1] = precedent;
       }
+      this.liste.insererDebut(new Integer(i));
     }
   
   public void densifierListe(){

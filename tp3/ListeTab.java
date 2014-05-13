@@ -228,43 +228,4 @@ class ListeTab implements Liste{
     }
     return res;
   }
-
-
-  public static void main (String[] args) {
-    Liste l = new ListeTab(3);
-    System.out.println("La liste "+(l.estVide() ?"est" :"n'est pas")+" vide");
-    System.out.println("\nInsertion au début");
-    l.insererDebut(new Integer(1));
-    l.afficher();
-    System.out.println(l);
-    System.out.println("\nInsertion à la fin");
-    l.insererFin(new Integer(3));
-    l.afficher();
-    System.out.println(l);
-    System.out.println("\nInsertion au milieu");
-    l.inserer(new Integer(2),2);
-    l.afficher();
-    System.out.println(l);
-    System.out.println("La liste "+(l.estPleine() ? "est" : "n'est pas")+" pleine");
-    //System.out.println("\nInsertion à la fin");
-    //l.insererFin(new Integer(4));
-    //l.afficher();
-
-    System.out.println("\n Suppression");
-    l.supprimer(2);
-    l.afficher();
-    System.out.println(l);
-  }
-
-
-
-
-
-
-
-
-
-
-
-
 }
